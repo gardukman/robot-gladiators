@@ -27,7 +27,6 @@ var fight = function(enemyName) {
             }
         }
 
-        // remove enemy's health by subractin the amount set in the playerAttack variable
         enemyHealth = enemyHealth - playerAttack;
         console.log(
             playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' health remaining.'
@@ -79,6 +78,14 @@ var startGame = function() {
             enemyHealth = 50;
 
             fight(pickedEnemyName);
+
+            // if we're not at the last enemy in the array
+            if (playerHealth > 0 && i < enemyNames.length - 1) {
+                var storeConfirm = window.confirm("The fight is over, visit the store before the next round?");
+                if (storeConfirm) {
+                shop();
+                }
+            }
         }
         else {
             window.alert("You have lost your robot in battle! Game Over!");
@@ -99,6 +106,50 @@ var endGame = function() {
         window.alert("You've lost your robot in battle.");
     }
 }
+
+var shop = function() {
+   var shopOptionPrompt = window.prompt(
+       "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', OR 'LEAVE' to make a choice."
+       );
+
+    switch (shopOptionPrompt) {
+        case "refill":
+        case "REFILL":
+            if (playerMoney >= 7) {
+            window.alert("Refilling player's health by 20 for 7 dollars.");
+
+            playerHealth = playerHealth + 25;
+            playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("You don't have enough money!");
+            }
+
+            break;
+        case "upgrade":
+        case "UPGRADE":
+            if (playerMoney >= 7) {
+            window.alert("Upgrading player's attack by 6 for 7 dollars.");
+
+            playerAttack = playerAttack + 7;
+            playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("You don't have enough money!");
+            }
+
+            break;
+        case "leave":
+        case "LEAVE":
+            window.alert("Leaving the store.");
+
+            break;
+        default:
+            window.alert("You did not pick a valid option. Try again.");
+            shop();
+            break;
+    }
+};
 
 // ask player if they'd like to play again
 var playAgainConfirm = window.confirm("Would you like to play again?");
